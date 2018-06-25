@@ -34,17 +34,31 @@ app.get('/api/v1/palettes/', (request, response) => {
 });
 
 app.post('/api/v1/projects/', (request, response) => {
-  return database('projects').insert(request.body)
-  .then(project => {
-    return response.status(200).json({ project })
-  });
+  if(!request.body.name) {
+    return response.status(404).json({
+      error: 'No project name has been provided'
+    });
+  } else {
+    return database('projects').insert(request.body)
+    .then(project => {
+      return response.status(200).json({ project })
+    });
+  }
 });
 
 app.post('/api/v1/palettes/', (request, response) => {
-  return database('palettes').insert(request.body)
-  .then(palette => {
-    return response.status(200).json({ palette })
-  });
+  const { color1, color2, color3, color4, color5, name } = request.body;
+
+  if( color1, color2, color3, color4, color5, name ) {
+    return database('palettes').insert(request.body)
+    .then(palette => {
+      return response.status(200).json({ palette })
+    });  
+  } else {
+    return response.statusMessage(404).json({
+      error: 'An incomplete palette has been submitted'
+    });
+  }
 });
 
 app.listen(3000, () => {
