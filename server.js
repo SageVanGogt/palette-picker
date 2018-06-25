@@ -12,6 +12,7 @@ app.use(function(request, response, next) {
   next();
 });
 app.use(bodyParser.json());
+app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.listen(3000, () => {
