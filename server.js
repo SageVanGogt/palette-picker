@@ -15,6 +15,38 @@ app.use(bodyParser.json());
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.get('/api/', (request, response) => {
+  return response.status(200).json('Your database');
+});
+
+app.get('/api/v1/projects/', (request, response) => {
+  return database('projects').select()
+  .then(projects => {
+    return response.status(200).json(projects);
+  })
+});
+
+app.get('/api/v1/palettes/', (request, response) => {
+  return database('palettes').select()
+  .then(palettes => {
+    return response.status(200).json(palettes);
+  })
+});
+
+app.post('/api/v1/projects/', (request, response) => {
+  return database('projects').insert(request.body)
+  .then(project => {
+    return response.status(200).json({ project })
+  });
+});
+
+app.post('/api/v1/palettes/', (request, response) => {
+  return database('palettes').insert(request.body)
+  .then(palette => {
+    return response.status(200).json({ palette })
+  });
+});
+
 app.listen(3000, () => {
   console.log('Express intro running on localhost: 3000');
 });
