@@ -15,7 +15,7 @@ $( document ).ready(function() {
 
   function toggleLockColor() {
     const name = this.parentElement.attributes.name.value;
-    
+
     if(!finalPalette[name]) {
       finalPalette[name] = $(`.${name}`).css('background-color');
     } else {
@@ -24,30 +24,12 @@ $( document ).ready(function() {
   }
   
   function prependPalette() {
-    if(finalPalette['color1']) {
-      $('.color1').css('background-color', `${finalPalette['color1']}`)
-    } else {
-      $('.color1').css('background-color', `${palette[0]}`)
-    }
-    if(finalPalette['color2']) {
-      $('.color2').css('background-color', `${finalPalette['color2']}`)
-    } else {
-      $('.color2').css('background-color', `${palette[1]}`)
-    }
-    if(finalPalette['color3']) {
-      $('.color3').css('background-color', `${finalPalette['color3']}`)
-    } else {
-      $('.color3').css('background-color', `${palette[2]}`)
-    }
-    if(finalPalette['color4']) {
-      $('.color4').css('background-color', `${finalPalette['color4']}`)
-    } else {
-      $('.color4').css('background-color', `${palette[3]}`)
-    }
-    if(finalPalette['color5']) {
-      $('.color5').css('background-color', `${finalPalette['color5']}`)
-    } else {
-      $('.color5').css('background-color', `${palette[4]}`)
+    for ( i = 0; i <= 5; i++ ) {
+      if(finalPalette[`color${i}`]) {
+        $(`.color${i}`).css('background-color', `${finalPalette['color'+i]}`)
+      } else {
+        $(`.color${i}`).css('background-color', `${palette[i-1]}`)
+      }
     }
   };
 });
