@@ -1,0 +1,14 @@
+.color-palette {
+  display: flex;
+}
+
+.color {
+  width: 200px;
+  height: 200px;
+  border: 1px solid black;
+  margin: 5px;
+}
+
+.palette-enter-form {
+  display: flex;
+}
