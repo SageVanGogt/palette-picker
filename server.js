@@ -43,7 +43,7 @@ app.post('/api/v1/projects/', (request, response) => {
     .returning('id')
     .then(projectId => {
       return response.status(200).json({ 
-        id: projectId,
+        id: projectId[0],
         status: 'success' 
       })
     });
@@ -55,8 +55,12 @@ app.post('/api/v1/palettes/', (request, response) => {
 
   if( color1, color2, color3, color4, color5, name ) {
     return database('palettes').insert(request.body)
-    .then(palette => {
-      return response.status(200).json({ palette })
+    .returning('id')
+    .then(paletteId => {
+      return response.status(200).json({ 
+          id: paletteId,
+          status: 'success' 
+      })
     });  
   } else {
     return response.statusMessage(404).json({
