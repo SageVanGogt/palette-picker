@@ -39,9 +39,12 @@ app.post('/api/v1/projects/', (request, response) => {
       error: 'No project name has been provided'
     });
   } else {
-    return database('projects').insert(request.body)
-    .then(project => {
-      return response.status(200).json({ project })
+    return database('projects').insert(request.body, 'id')
+    .then(projectId => {
+      return response.status(201).json({ 
+        id: projectId[0],
+        status: 'success' 
+      })
     });
   }
 });
@@ -50,9 +53,12 @@ app.post('/api/v1/palettes/', (request, response) => {
   const { color1, color2, color3, color4, color5, name } = request.body;
 
   if( color1, color2, color3, color4, color5, name ) {
-    return database('palettes').insert(request.body)
-    .then(palette => {
-      return response.status(200).json({ palette })
+    return database('palettes').insert(request.body, 'id')
+    .then(paletteId => {
+      return response.status(201).json({ 
+          id: paletteId,
+          status: 'success' 
+      })
     });  
   } else {
     return response.statusMessage(404).json({
@@ -60,6 +66,36 @@ app.post('/api/v1/palettes/', (request, response) => {
     });
   }
 });
+
+app.delete('/api/v1/projects/:id', (request, response) => {
+  const projectId = request.params.id;
+
+  return database('projects')
+    .where({
+      id: projectId
+    })
+    .del()
+    .then((() => {
+      return response.status(202).json({
+        status: 'success'
+      })
+    }))
+})
+
+app.delete('/api/v1/palettes/:id', (request, response) => {
+  const paletteId = request.params.id;
+
+  return database('palettes')
+    .where({
+      id: paletteId
+    })
+    .del()
+    .then((() => {
+      return response.status(202).json({
+        status: 'success'
+      })
+    }))
+})
 
 app.listen(3000, () => {
   console.log('Express intro running on localhost: 3000');

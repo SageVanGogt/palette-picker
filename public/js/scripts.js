@@ -1,7 +1,8 @@
 $( document ).ready(function() {
   $('.new-palette').on('click', randomizePalette);
   $('.lock-btn').on('click', toggleLockColor);
-  $('.palette-enter-form').on('click', postNewPalette);
+  $('.palette-enter-form').on('submit', postNewPalette);
+  $('.project-form').on('submit', postNewProject);
 
   let palette = [];
   let finalPalette = {};
@@ -11,7 +12,7 @@ $( document ).ready(function() {
     for (i = 0; i < 5; i++) {
       palette.push('#'+(Math.random()*0xFFFFFF<<0).toString(16));
     };
-    prependPalette();
+    prependPaletteColors();
   };
 
   function toggleLockColor() {
@@ -24,7 +25,8 @@ $( document ).ready(function() {
     };
   };
   
-  function prependPalette() {
+  function prependPaletteColors() {
+
     for ( i = 0; i <= 5; i++ ) {
       if(finalPalette[`color${i}`]) {
         $(`.color${i}`).css('background-color', `${finalPalette['color'+i]}`)
@@ -34,8 +36,77 @@ $( document ).ready(function() {
     }
   };
 
-  function postNewPalette(event) {
+  async function postNewProject(event) {
     event.preventDefault();
+    const projectName = $('.project-form').find('input[id="project-name"]').val();
+    const url = `http://localhost:3000/api/v1/projects/`;
+    const body = {
+      method: 'POST',
+      body: JSON.stringify({ name: projectName }),
+      headers: {
+        "Content-Type": "application/json"        
+      }
+    };
+    const response = await fetch(url, body);
+    const projectId = await response.json();
+
+    prependProject(projectId.id, projectName);
+    prependProjectToOptions(projectId.id, projectName);
   }
+
+  async function postNewPalette(event) {
+    event.preventDefault();
+    const paletteName = $('.palette-enter-form').find('input[id="palette-name"]').val();
+    const projectId = $( "select option:selected" ).val().split("-")[1];
+    const url = `http://localhost:3000/api/v1/palettes/`;
+    const body = {
+      method: 'POST',
+      body: JSON.stringify({ 
+        name: paletteName,
+        project_id: projectId,
+        ...finalPalette 
+      }),
+      headers: {
+        "Content-Type": "application/json"        
+      }
+    };
+    const response = await fetch(url, body);
+    const paletteId = await response.json();
+  
+    prependPalette(paletteId.id, paletteName, projectId);
+  }
+
+  function prependProjectToOptions(id, name) {
+    $('#project-options').prepend(`
+      <option value="option-${id}">${name}</option>  
+    `)
+  }
+
+  function prependProject(id, name) {
+    $('.project-list').prepend(`
+      <h2 class="project-title">${name}</h2>
+      <ul class="palette-list-${id}"></ul>
+    `)
+  }
+
+  function prependPalette(paletteId, name, projectId) {
+    const colorTemplate = Object.values(finalPalette).map(color => {
+      return (
+        `<div 
+          class="palette-list-one-color 
+          style="background-color:${color}">
+        </div>`
+      )
+    }).join();
+    $(`.palette-list-${projectId}`).prepend(`
+      <article class="palette">
+        <h4>${name}</h4>
+        <div class="palette-list-all-colors">
+          ${colorTemplate}
+        </div>
+        <button id="palette-${paletteId}">delete</button>
+      </article>
+    `)
+  };
 
 });
