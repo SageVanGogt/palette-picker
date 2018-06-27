@@ -1,11 +1,40 @@
+
 $( document ).ready(function() {
+  $( document ).ready(getPaletteData);
   $('.new-palette').on('click', randomizePalette);
   $('.lock-btn').on('click', toggleLockColor);
   $('.palette-enter-form').on('submit', postNewPalette);
   $('.project-form').on('submit', postNewProject);
+  $('.projects').on('click', '.delete-palette-btn', deletePalette);
 
   let palette = [];
   let finalPalette = {};
+
+  function getPaletteData() {
+    getProjects();
+    getPalettes();
+  }
+
+  async function getProjects() {
+    const response = await fetch('http://localhost:3000/api/v1/projects')
+    const projects = await response.json();
+    projects.forEach(project => prependProject(project.id, project.name));
+  }
+
+  async function getPalettes() {
+    const response = await fetch('http://localhost:3000/api/v1/palettes');
+    const palettes = await response.json();
+    palettes.forEach(palette => {
+      const colors = [
+        palette.color1, 
+        palette.color2,
+        palette.color3,
+        palette.color4,
+        palette.color5
+      ]
+      prependPalette(palette.id, palette.name, colors, palette.project_id)
+    })
+  }
 
   function randomizePalette() {
     palette = [];
@@ -71,9 +100,15 @@ $( document ).ready(function() {
       }
     };
     const response = await fetch(url, body);
-    const paletteId = await response.json();
-  
-    prependPalette(paletteId.id, paletteName, projectId);
+    const palette = await response.json();
+    const colors = [
+      palette.color1, 
+      palette.color2,
+      palette.color3,
+      palette.color4,
+      palette.color5
+    ]
+    prependPalette(palette.id, paletteName, colors, projectId);
   }
 
   function prependProjectToOptions(id, name) {
@@ -89,24 +124,38 @@ $( document ).ready(function() {
     `)
   }
 
-  function prependPalette(paletteId, name, projectId) {
-    const colorTemplate = Object.values(finalPalette).map(color => {
+  function prependPalette(paletteId, name, colors, projectId) {
+    const colorTemplate = colors.map(color => {
       return (
         `<div 
-          class="palette-list-one-color 
+          class="palette-list-one-color" 
           style="background-color:${color}">
         </div>`
       )
-    }).join();
+    }).join('');
     $(`.palette-list-${projectId}`).prepend(`
       <article class="palette">
         <h4>${name}</h4>
         <div class="palette-list-all-colors">
           ${colorTemplate}
         </div>
-        <button id="palette-${paletteId}">delete</button>
+        <button class="delete-palette-btn" value="palette-${paletteId}">delete</button>
       </article>
     `)
   };
+
+  async function deletePalette() {
+    const paletteId = this.value.split('-')[1];
+    const url = `http://localhost:3000/api/v1/palettes/${paletteId}`;
+    const body = {
+      method: 'DELETE',
+      headers: {
+        "Content-Type": "application/json"        
+      }
+    }
+    await fetch(url, body);
+    this.parentNode.remove();
+  }
+
 
 });
