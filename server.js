@@ -50,21 +50,27 @@ app.post('/api/v1/projects/', (request, response) => {
 });
 
 app.post('/api/v1/palettes/', (request, response) => {
-  const { color1, color2, color3, color4, color5, name } = request.body;
-
-  if( color1, color2, color3, color4, color5, name ) {
-    return database('palettes').insert(request.body, 'id')
-    .then(paletteId => {
+  // const { color1, color2, color3, color4, color5, name } = request.body;
+  console.log('pie')
+  // if( color1, color2, color3, color4, color5, name ) {
+    return database('palettes').insert(request.body, '*')
+    .then(palette => {
+      // console.log(palette)
       return response.status(201).json({ 
-          id: paletteId,
+          id: palette.id,
+          color1: palette.color1, 
+          color2: palette.color2,
+          color3: palette.color3,
+          color4: palette.color4,
+          color5: palette.color5,
           status: 'success' 
       })
     });  
-  } else {
-    return response.statusMessage(404).json({
-      error: 'An incomplete palette has been submitted'
-    });
-  }
+  // } else {
+  //   return response.statusMessage(404).json({
+  //     error: 'An incomplete palette has been submitted'
+  //   });
+  // }
 });
 
 app.delete('/api/v1/projects/:id', (request, response) => {
