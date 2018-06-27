@@ -5,6 +5,7 @@ $( document ).ready(function() {
   $('.lock-btn').on('click', toggleLockColor);
   $('.palette-enter-form').on('submit', postNewPalette);
   $('.project-form').on('submit', postNewProject);
+  $('.projects').on('click', '.delete-palette-btn', deletePalette);
 
   let palette = [];
   let finalPalette = {};
@@ -138,9 +139,23 @@ $( document ).ready(function() {
         <div class="palette-list-all-colors">
           ${colorTemplate}
         </div>
-        <button id="palette-${paletteId}">delete</button>
+        <button class="delete-palette-btn" value="palette-${paletteId}">delete</button>
       </article>
     `)
   };
+
+  async function deletePalette() {
+    const paletteId = this.value.split('-')[1];
+    const url = `http://localhost:3000/api/v1/palettes/${paletteId}`;
+    const body = {
+      method: 'DELETE',
+      headers: {
+        "Content-Type": "application/json"        
+      }
+    }
+    await fetch(url, body);
+    this.parentNode.remove();
+  }
+
 
 });

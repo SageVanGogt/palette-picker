@@ -51,7 +51,6 @@ app.post('/api/v1/projects/', (request, response) => {
 
 app.post('/api/v1/palettes/', (request, response) => {
   // const { color1, color2, color3, color4, color5, name } = request.body;
-  console.log('pie')
   // if( color1, color2, color3, color4, color5, name ) {
     return database('palettes').insert(request.body, '*')
     .then(palette => {
