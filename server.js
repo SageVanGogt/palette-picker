@@ -61,6 +61,36 @@ app.post('/api/v1/palettes/', (request, response) => {
   }
 });
 
+app.delete('/api/v1/projects/:id', (request, response) => {
+  const projectId = request.params.id;
+
+  return database('projects')
+    .where({
+      id: projectId
+    })
+    .del()
+    .then((() => {
+      return response.status(200).json({
+        status: 'success'
+      })
+    }))
+})
+
+app.delete('/api/v1/palettes/:id', (request, response) => {
+  const paletteId = request.params.id;
+
+  return database('palettes')
+    .where({
+      id: paletteId
+    })
+    .del()
+    .then((() => {
+      return response.status(200).json({
+        status: 'success'
+      })
+    }))
+})
+
 app.listen(3000, () => {
   console.log('Express intro running on localhost: 3000');
 });
