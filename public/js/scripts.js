@@ -1,6 +1,7 @@
 $( document ).ready(function() {
   $('.new-palette').on('click', randomizePalette);
   $('.lock-btn').on('click', toggleLockColor);
+  $('.palette-enter-form').on('click', postNewPalette);
 
   let palette = [];
   let finalPalette = {};
@@ -21,7 +22,7 @@ $( document ).ready(function() {
     } else {
       finalPalette[name] = null;
     };
-  }
+  };
   
   function prependPalette() {
     for ( i = 0; i <= 5; i++ ) {
@@ -32,17 +33,9 @@ $( document ).ready(function() {
       }
     }
   };
+
+  function postNewPalette(event) {
+    event.preventDefault();
+  }
+
 });
-
-
-
-      // $('.color').css('background-color', `${color}`)
-      // $('.color-palette').prepend(`
-      // <div 
-      //   class="color"
-      //   style="background-color:${color};"
-      // >
-      //   <button></button>
-      //   <h3>${color}</h3>
-      // </div>
-      // `);
