@@ -39,8 +39,7 @@ app.post('/api/v1/projects/', (request, response) => {
       error: 'No project name has been provided'
     });
   } else {
-    return database('projects').insert(request.body)
-    .returning('id')
+    return database('projects').insert(request.body, 'id')
     .then(projectId => {
       return response.status(200).json({ 
         id: projectId[0],
@@ -54,8 +53,7 @@ app.post('/api/v1/palettes/', (request, response) => {
   const { color1, color2, color3, color4, color5, name } = request.body;
 
   if( color1, color2, color3, color4, color5, name ) {
-    return database('palettes').insert(request.body)
-    .returning('id')
+    return database('palettes').insert(request.body, 'id')
     .then(paletteId => {
       return response.status(200).json({ 
           id: paletteId,

@@ -38,7 +38,6 @@ $( document ).ready(function() {
   async function postNewProject(event) {
     event.preventDefault();
     const projectName = $('.project-form').find('input[id="project-name"]').val();
-    console.log(projectName)
     const url = `http://localhost:3000/api/v1/projects/`;
     const body = {
       method: 'POST',
@@ -50,13 +49,14 @@ $( document ).ready(function() {
     const response = await fetch(url, body);
     const projectId = await response.json();
 
-    // prependProject(projectId, projectName);
-    prependProjectToOptions(projectId, projectName);
+    prependProject(projectId.id, projectName);
+    prependProjectToOptions(projectId.id, projectName);
   }
 
   async function postNewPalette(event) {
     event.preventDefault();
     const paletteName = $('.palette-enter-form').find('input[id="palette-name"]').val();
+    const projectId = $( "select option:selected" ).val().split("-")[1];
     const url = `http://localhost:3000/api/v1/palettes/`;
     const body = {
       method: 'POST',
@@ -71,21 +71,26 @@ $( document ).ready(function() {
     const response = await fetch(url, body);
     const paletteId = await response.json();
   
-    prependPalette(paletteId, paletteName);
+    prependPalette(paletteId, paletteName, projectId);
   }
 
   function prependProjectToOptions(id, name) {
     $('#project-options').prepend(`
-      <option id="option+${id}">${name}</option>  
+      <option value="option-${id}">${name}</option>  
     `)
   }
 
-  function prependProject() {
-    
+  function prependProject(id, name) {
+    $('.project-list').prepend(`
+      <h2 class="project-title">${name}</h2>
+      <ul class="palette-list-${id}"></ul>
+    `)
   }
 
-  function prependPalette() {
-
+  function prependPalette(paletteId, name, projectId) {
+    $(`.palette-list-${projectId}`).prepend(`
+      <h4>${name}</h4>
+    `)
   }
 
 });
