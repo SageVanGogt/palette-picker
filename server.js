@@ -40,8 +40,12 @@ app.post('/api/v1/projects/', (request, response) => {
     });
   } else {
     return database('projects').insert(request.body)
-    .then(project => {
-      return response.status(200).json({ project })
+    .returning('id')
+    .then(projectId => {
+      return response.status(200).json({ 
+        id: projectId,
+        status: 'success' 
+      })
     });
   }
 });
