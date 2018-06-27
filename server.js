@@ -41,7 +41,7 @@ app.post('/api/v1/projects/', (request, response) => {
   } else {
     return database('projects').insert(request.body, 'id')
     .then(projectId => {
-      return response.status(200).json({ 
+      return response.status(201).json({ 
         id: projectId[0],
         status: 'success' 
       })
@@ -55,7 +55,7 @@ app.post('/api/v1/palettes/', (request, response) => {
   if( color1, color2, color3, color4, color5, name ) {
     return database('palettes').insert(request.body, 'id')
     .then(paletteId => {
-      return response.status(200).json({ 
+      return response.status(201).json({ 
           id: paletteId,
           status: 'success' 
       })
@@ -76,7 +76,7 @@ app.delete('/api/v1/projects/:id', (request, response) => {
     })
     .del()
     .then((() => {
-      return response.status(200).json({
+      return response.status(202).json({
         status: 'success'
       })
     }))
@@ -91,7 +91,7 @@ app.delete('/api/v1/palettes/:id', (request, response) => {
     })
     .del()
     .then((() => {
-      return response.status(200).json({
+      return response.status(202).json({
         status: 'success'
       })
     }))

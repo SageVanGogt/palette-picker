@@ -12,7 +12,7 @@ $( document ).ready(function() {
     for (i = 0; i < 5; i++) {
       palette.push('#'+(Math.random()*0xFFFFFF<<0).toString(16));
     };
-    prependPalette();
+    prependPaletteColors();
   };
 
   function toggleLockColor() {
@@ -25,7 +25,8 @@ $( document ).ready(function() {
     };
   };
   
-  function prependPalette() {
+  function prependPaletteColors() {
+
     for ( i = 0; i <= 5; i++ ) {
       if(finalPalette[`color${i}`]) {
         $(`.color${i}`).css('background-color', `${finalPalette['color'+i]}`)
@@ -62,6 +63,7 @@ $( document ).ready(function() {
       method: 'POST',
       body: JSON.stringify({ 
         name: paletteName,
+        project_id: projectId,
         ...finalPalette 
       }),
       headers: {
@@ -71,7 +73,7 @@ $( document ).ready(function() {
     const response = await fetch(url, body);
     const paletteId = await response.json();
   
-    prependPalette(paletteId, paletteName, projectId);
+    prependPalette(paletteId.id, paletteName, projectId);
   }
 
   function prependProjectToOptions(id, name) {
@@ -88,9 +90,23 @@ $( document ).ready(function() {
   }
 
   function prependPalette(paletteId, name, projectId) {
+    const colorTemplate = Object.values(finalPalette).map(color => {
+      return (
+        `<div 
+          class="palette-list-one-color 
+          style="background-color:${color}">
+        </div>`
+      )
+    }).join();
     $(`.palette-list-${projectId}`).prepend(`
-      <h4>${name}</h4>
+      <article class="palette">
+        <h4>${name}</h4>
+        <div class="palette-list-all-colors">
+          ${colorTemplate}
+        </div>
+        <button id="palette-${paletteId}">delete</button>
+      </article>
     `)
-  }
+  };
 
 });
