@@ -50,7 +50,8 @@ $( document ).ready(function() {
     const response = await fetch(url, body);
     const projectId = await response.json();
 
-    prependProject(projectId, projectName);
+    // prependProject(projectId, projectName);
+    prependProjectToOptions(projectId, projectName);
   }
 
   async function postNewPalette(event) {
@@ -73,12 +74,18 @@ $( document ).ready(function() {
     prependPalette(paletteId, paletteName);
   }
 
-  function prependProject() {
+  function prependProjectToOptions(id, name) {
+    $('#project-options').prepend(`
+      <option id="option+${id}">${name}</option>  
+    `)
+  }
 
+  function prependProject() {
+    
   }
 
   function prependPalette() {
-    
+
   }
 
 });
