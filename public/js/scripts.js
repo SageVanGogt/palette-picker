@@ -18,7 +18,10 @@ $( document ).ready(function() {
   async function getProjects() {
     const response = await fetch('http://localhost:3000/api/v1/projects')
     const projects = await response.json();
-    projects.forEach(project => prependProject(project.id, project.name));
+    projects.forEach(project => {
+      prependProject(project.id, project.name)
+      prependProjectToOptions(project.id, project.name)
+    });
   }
 
   async function getPalettes() {
@@ -108,6 +111,7 @@ $( document ).ready(function() {
       palette.color4,
       palette.color5
     ]
+    console.log(palette)
     prependPalette(palette.id, paletteName, colors, projectId);
   }
 

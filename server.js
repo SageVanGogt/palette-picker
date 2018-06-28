@@ -54,14 +54,13 @@ app.post('/api/v1/palettes/', (request, response) => {
   // if( color1, color2, color3, color4, color5, name ) {
     return database('palettes').insert(request.body, '*')
     .then(palette => {
-      // console.log(palette)
       return response.status(201).json({ 
-          id: palette.id,
-          color1: palette.color1, 
-          color2: palette.color2,
-          color3: palette.color3,
-          color4: palette.color4,
-          color5: palette.color5,
+          id: palette[0].id,
+          color1: palette[0].color1, 
+          color2: palette[0].color2,
+          color3: palette[0].color3,
+          color4: palette[0].color4,
+          color5: palette[0].color5,
           status: 'success' 
       })
     });  
