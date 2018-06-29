@@ -15,7 +15,7 @@ app.use(bodyParser.json());
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get('/api', (request, response) => {
+app.get('/', (request, response) => {
   return response.status(200).json('Palette-picker database');
 });
 
