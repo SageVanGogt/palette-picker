@@ -42,10 +42,13 @@ body {
 }
 
 .projects {
+  width: 80%;
   border-top: 2px solid black;
+  margin: auto;
 }
 
 .project-item {
+  margin-right: 20px;
   width: 400px;
 }
 

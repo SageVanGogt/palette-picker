@@ -1,68 +1,57 @@
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta 
-      name="viewport" 
-      content="width=device-width, initial-scale=1.0">
-    <meta 
-      http-equiv="X-UA-Compatible" 
-      content="ie=edge">
-    <link 
-      rel="stylesheet"
-      type="text/css"
-      href="css/styles.css" />
-    <title>Palette Picker</title>
-  </head>
-  <body>
-    <h1 class="header">Nose Picker</h1>
-    <section class="color-palette">
-      <div class="color color1" name="color1">
-        <button class="lock-btn">lock</button>
-        <h3></h3>
-      </div>
-      <div class="color color2" name="color2">
-        <button class="lock-btn">lock</button>
-        <h3></h3>
-      </div>
-      <div class="color color3" name="color3">
-        <button class="lock-btn">lock</button>
-        <h3></h3>
-      </div>
-      <div class="color color4" name="color4">
-        <button class="lock-btn">lock</button>
-        <h3></h3>
-      </div>
-      <div class="color color5" name="color5">
-        <button class="lock-btn">lock</button>
-        <h3></h3>
-      </div>
-    </section>
-    <button class="new-palette">generate new palette!</button>
-    <form action="submit" class="palette-enter-form">
-      <select name="project-list" id="project-options">
-      </select>
-      <input type="text" id="palette-name">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" type="text/css" href="css/styles.css" />
+  <title>Palette Picker</title>
+</head>
+
+<body>
+  <h1 class="header">Nose Picker</h1>
+  <section class="color-palette">
+    <div class="color color1" name="color1">
+      <button class="lock-btn">lock</button>
+      <h3></h3>
+    </div>
+    <div class="color color2" name="color2">
+      <button class="lock-btn">lock</button>
+      <h3></h3>
+    </div>
+    <div class="color color3" name="color3">
+      <button class="lock-btn">lock</button>
+      <h3></h3>
+    </div>
+    <div class="color color4" name="color4">
+      <button class="lock-btn">lock</button>
+      <h3></h3>
+    </div>
+    <div class="color color5" name="color5">
+      <button class="lock-btn">lock</button>
+      <h3></h3>
+    </div>
+  </section>
+  <button class="new-palette">generate new palette!</button>
+  <form action="submit" class="palette-enter-form">
+    <select name="project-list" id="project-options">
+    </select>
+    <input type="text" id="palette-name">
+    <input type="submit">
+  </form>
+  <section class="projects">
+    <form action="submit" class="project-form">
+      <label for="project-name">Create a New Project</label>
+      <input type="text" id="project-name" placeholder="new project name">
       <input type="submit">
     </form>
-    <section class="projects">
-      <form action="submit" class="project-form">
-        <label for="project-name">Create a New Project</label>
-        <input 
-          type="text" 
-          id="project-name" 
-          
-          placeholder="new project name">
-        <input type="submit">
-      </form>
-      <section class="project-list">
+    <section class="project-list">
 
-      </section>
     </section>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script 
-      type="text/javascript" 
-      src="js/scripts.js">
-    </script>
-  </body>
-</html>
+  </section>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script type="text/javascript" src="js/scripts.js">
+  </script>
+</body>
 
+</html>
