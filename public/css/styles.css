@@ -1,10 +1,17 @@
 
 body {
   text-align: center;
+  width: 100vw;
 }
 
 .color-palette {
   display: flex;
+  justify-content: center;
+  margin: auto;
+}
+
+.new-palette {
+  margin: auto;
 }
 
 .color {
@@ -15,7 +22,9 @@ body {
 }
 
 .palette-enter-form {
+  width: 100%;
   display: flex;
+  justify-content: center;
 }
 
 .palette {
@@ -30,4 +39,45 @@ body {
 
 .palette-list-all-colors {
   display: flex;
+}
+
+.projects {
+  border-top: 2px solid black;
+}
+
+.project-item {
+  width: 400px;
+}
+
+.project-title {
+  border: 1px solid black;
+}
+
+.project-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.palette-list-one-color {
+  margin-right: 2px;
+}
+
+.palette {
+  display: flex;
+  justify-content: end;
+  width: 300px;
+  margin-top: 15px;
+}
+
+.palette h4 {
+  margin-right: 10px;
+}
+
+.palette-list-all-colors {
+}
+
+.delete-palette-btn {
+  margin-left: 10px;
+  background: none;
+  border: none;
 }

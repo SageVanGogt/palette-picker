@@ -123,8 +123,10 @@ $( document ).ready(function() {
 
   function prependProject(id, name) {
     $('.project-list').prepend(`
-      <h2 class="project-title">${name}</h2>
-      <ul class="palette-list-${id}"></ul>
+      <div class="project-item">
+        <h2 class="project-title">${name}</h2>
+        <ul class="palette-list palette-list-${id}"></ul>
+      </div>
     `)
   }
 

@@ -50,8 +50,9 @@ app.post('/api/v1/projects', (request, response) => {
 });
 
 app.post('/api/v1/palettes', (request, response) => {
-  // const { color1, color2, color3, color4, color5, name } = request.body;
-  // if( color1, color2, color3, color4, color5, name ) {
+  let result = ['name', 'project_id', 'color1', 'color2', 'color3', 'color4', 'color5']
+    .every(prop => request.body.hasOwnProperty(prop));
+  if( result ) {
     return database('palettes').insert(request.body, '*')
     .then(palette => {
       return response.status(201).json({ 
@@ -64,11 +65,11 @@ app.post('/api/v1/palettes', (request, response) => {
           status: 'success' 
       })
     });  
-  // } else {
-  //   return response.statusMessage(404).json({
-  //     error: 'An incomplete palette has been submitted'
-  //   });
-  // }
+  } else {
+    return response.status(404).json({
+      error: 'An incomplete palette has been submitted'
+    });
+  }
 });
 
 app.delete('/api/v1/projects/:id', (request, response) => {
