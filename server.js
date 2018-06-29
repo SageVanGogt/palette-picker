@@ -5,6 +5,8 @@ const environment = process.env.NODE_ENV || 'development';
 const configuration = require('./knexfile')[environment];
 const database = require('knex')(configuration);
 
+app.set('port', process.env.PORT || 3000);
+
 app.use(function(request, response, next) {
   response.header("Access-Control-Allow-Origin", "*");
   response.header("Access-Control-Allow-Methods", "*");
@@ -14,10 +16,6 @@ app.use(function(request, response, next) {
 app.use(bodyParser.json());
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
-
-app.get('/', (request, response) => {
-  return response.status(200).json('Palette-picker database');
-});
 
 app.get('/api/v1/projects', (request, response) => {
   return database('projects').select()
@@ -87,7 +85,7 @@ app.delete('/api/v1/palettes/:id', (request, response) => {
     }))
 })
 
-app.listen(3000, () => {
+app.listen(app.get('port'), () => {
   console.log('Express intro running on localhost: 3000');
 });
 
