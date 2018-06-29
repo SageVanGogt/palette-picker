@@ -72,21 +72,6 @@ app.post('/api/v1/palettes', (request, response) => {
   }
 });
 
-app.delete('/api/v1/projects/:id', (request, response) => {
-  const projectId = request.params.id;
-
-  return database('projects')
-    .where({
-      id: projectId
-    })
-    .del()
-    .then((() => {
-      return response.status(202).json({
-        status: 'success'
-      })
-    }))
-})
-
 app.delete('/api/v1/palettes/:id', (request, response) => {
   const paletteId = request.params.id;
 
