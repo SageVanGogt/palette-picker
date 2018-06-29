@@ -16,7 +16,7 @@ $( document ).ready(function() {
   }
 
   async function getProjects() {
-    const response = await fetch('http://localhost:3000/api/v1/projects')
+    const response = await fetch('/api/v1/projects')
     const projects = await response.json();
     projects.forEach(project => {
       prependProject(project.id, project.name)
@@ -25,7 +25,7 @@ $( document ).ready(function() {
   }
 
   async function getPalettes() {
-    const response = await fetch('http://localhost:3000/api/v1/palettes');
+    const response = await fetch('/api/v1/palettes');
     const palettes = await response.json();
     palettes.forEach(palette => {
       const colors = [
@@ -71,7 +71,7 @@ $( document ).ready(function() {
   async function postNewProject(event) {
     event.preventDefault();
     const projectName = $('.project-form').find('input[id="project-name"]').val();
-    const url = `http://localhost:3000/api/v1/projects/`;
+    const url = `/api/v1/projects/`;
     const body = {
       method: 'POST',
       body: JSON.stringify({ name: projectName }),
@@ -90,7 +90,7 @@ $( document ).ready(function() {
     event.preventDefault();
     const paletteName = $('.palette-enter-form').find('input[id="palette-name"]').val();
     const projectId = $( "select option:selected" ).val().split("-")[1];
-    const url = `http://localhost:3000/api/v1/palettes/`;
+    const url = `/api/v1/palettes/`;
     const body = {
       method: 'POST',
       body: JSON.stringify({ 
@@ -152,7 +152,7 @@ $( document ).ready(function() {
 
   async function deletePalette() {
     const paletteId = this.value.split('-')[1];
-    const url = `http://localhost:3000/api/v1/palettes/${paletteId}`;
+    const url = `/api/v1/palettes/${paletteId}`;
     const body = {
       method: 'DELETE',
       headers: {
