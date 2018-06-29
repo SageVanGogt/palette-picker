@@ -166,5 +166,61 @@ describe('API routes', () => {
       })
     })
   })
+
+  describe('DELETE /api/v1/projects/:id', () => {
+    it('should respond with a success message', (done) => {
+      knex('projects')
+      .select('*')
+      .then((projects) => {
+        const projectObject = projects[0];
+        const lengthBeforeDelete = projects.length;
+        chai.request(server)
+        .delete(`/api/v1/projects/${projectObject.id}`)
+        .end((err, response) => {
+          // there should be no errors
+          should.not.exist(err);
+          // there should be a 200 status code
+          response.status.should.equal(202);
+          // the responseponse should be JSON
+          response.type.should.equal('application/json');
+          // the JSON responseponse body should have a
+          // key-value pair of {"status": "success"}
+          response.body.status.should.equal('success');
+          // the JSON responseponse body should have a
+          // key-value pair of {"data": 1 user object}
+          // ensure the user was in fact deleted
+          knex('projects').select('*')
+          .then((updatedProjects) => {
+            updatedProjects.length.should.equal(lengthBeforeDelete - 1);
+            done();
+          });
+        });
+      });
+    });
+  });
+
+  describe('DELETE /api/v1/palettes/:id', () => {
+    it('should respond with a success message', (done) => {
+      knex('palettes')
+      .select('*')
+      .then((palettes) => {
+        const paletteObject = palettes[0];
+        const lengthBeforeDelete = palettes.length;
+        chai.request(server)
+        .delete(`/api/v1/palettes/${paletteObject.id}`)
+        .end((err, response) => {
+          should.not.exist(err);
+          response.status.should.equal(202);
+          response.type.should.equal('application/json');
+          response.body.status.should.equal('success');
+          knex('palettes').select('*')
+          .then((updatedPalettes) => {
+            updatedPalettes.length.should.equal(lengthBeforeDelete - 1);
+            done();
+          });
+        });
+      });
+    });
+  });  
 })
 
