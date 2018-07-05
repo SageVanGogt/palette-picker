@@ -7,6 +7,8 @@ const database = require('knex')(configuration);
 
 app.set('port', process.env.PORT || 3000);
 
+//comment explaining everything
+
 app.use(function(request, response, next) {
   response.header("Access-Control-Allow-Origin", "*");
   response.header("Access-Control-Allow-Methods", "*");
